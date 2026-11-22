@@ -1,0 +1,33 @@
+workflows:
+  ios-capacitor:
+    name: iOS Capacitor App Build
+    instance_type: mac_mini_m1
+    max_build_duration: 60
+    environment:
+      node: 20
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          npm ci || npm install
+      - name: Build web assets
+        script: |
+          npm run build
+      - name: Add and sync iOS platform
+        script: |
+          npx cap add ios || true
+          npx cap sync ios
+      - name: Build iOS App
+        script: |
+          cd ios/App
+          pod install
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -sdk iphoneos -derivedDataPath build CODE_SIGNING_ALLOWED=NO
+      - name: Package IPA
+        script: |
+          cd ios/App/build/Build/Products/Release-iphoneos
+          mkdir -p Payload
+          cp -r App.app Payload/
+          zip -r SmartSchool.ipa Payload
+    artifacts:
+      - "**/Release-iphoneos/*.ipa"
