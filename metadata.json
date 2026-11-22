@@ -1,0 +1,8 @@
+{
+  "name": "Remix SmartSchool Portal",
+  "description": "Aplikasi portal sekolah pintar untuk orang tua dan siswa dengan manajemen saldo jajan, absensi real-time, buku penghubung, tagihan SPP, dan tabungan sekolah.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
